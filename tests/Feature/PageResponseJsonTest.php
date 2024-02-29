@@ -13,7 +13,7 @@ test('nossa api de produtos precisa retornar a lista de produtos')
         ['title' => 'Product C'],
     ]);
 
-test('must list products from database', function () {
+test('json list products from database', function () {
     $product1 = Product::factory()->create();
     $product2 = Product::factory()->create();
 
