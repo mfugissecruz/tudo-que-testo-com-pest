@@ -16,3 +16,14 @@ Route::get('products', function () {
             'products' => Product::all(),
         ]);
 });
+
+Route::post('product/store/', function () {
+    Product::query()
+        ->create(request()->only('title'));
+
+    return response()->json('', 201);
+})->name('product.store');
+
+Route::post('product/update/{product}', function (Product $product) {
+    $product->update(request()->only('title'));
+})->name('product.update');
