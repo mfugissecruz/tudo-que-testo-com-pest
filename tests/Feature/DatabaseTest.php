@@ -8,7 +8,6 @@ use function Pest\Laravel\assertDatabaseMissing;
 use function Pest\Laravel\delete;
 use function Pest\Laravel\post;
 use function Pest\Laravel\postJson;
-use function PHPUnit\Framework\assertSame;
 
 it('should be able to create a product', function () {
     post(
