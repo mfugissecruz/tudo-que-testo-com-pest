@@ -23,3 +23,12 @@ test('an email was sent to user:x', function () {
 
     Mail::assertSent(WelcomeEmail::class, fn (WelcomeEmail $email) => $email->hasTo($user->email));
 });
+
+test('email subject contain the user name', function () {
+    $user = User::factory()->create();
+
+    $mail = new WelcomeEmail($user);
+
+    expect($mail)
+        ->assertHasSubject("Thank you {$user->name}");
+});
