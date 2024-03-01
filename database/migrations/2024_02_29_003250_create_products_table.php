@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class, 'owner_id');
             $table->string('title', 255);
             $table->string('code');
+            $table->boolean('released')->default(false);
             $table->timestamps();
         });
     }
