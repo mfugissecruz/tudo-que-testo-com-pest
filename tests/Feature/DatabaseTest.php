@@ -18,6 +18,7 @@ it('should be able to create a product', function () {
         route('product.store'), [
             'title' => 'Livro: Escolha ser filho',
             'owner_id' => $user->id,
+            'code' => 'jetete',
         ]
     )->assertCreated();
 
