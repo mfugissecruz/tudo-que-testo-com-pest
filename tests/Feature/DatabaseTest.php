@@ -2,6 +2,8 @@
 
 use App\Models\Product;
 
+use App\Models\User;
+
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\assertDatabaseMissing;
@@ -10,9 +12,13 @@ use function Pest\Laravel\post;
 use function Pest\Laravel\postJson;
 
 it('should be able to create a product', function () {
+    $user = User::factory()->create();
+
     post(
-        route('product.store'),
-        ['title' => 'Livro: Escolha ser filho']
+        route('product.store'), [
+            'title' => 'Livro: Escolha ser filho',
+            'owner_id' => $user->id,
+        ]
     )->assertCreated();
 
     assertDatabaseHas('products', ['title' => 'Livro: Escolha ser filho']);

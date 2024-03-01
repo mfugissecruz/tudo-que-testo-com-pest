@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class, 'owner_id');
             $table->string('title', 255);
+            $table->string('code');
             $table->timestamps();
         });
     }

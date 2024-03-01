@@ -11,6 +11,7 @@ Route::get('/403', function () {
 
     return ['oi'];
 });
+
 Route::get('products', function () {
     return view('product.index')
         ->with([
@@ -19,13 +20,15 @@ Route::get('products', function () {
 });
 
 Route::post('product/store/', function (Request $request) {
-
     $request->validate([
-        'title' => ['required', 'max:255']
+        'owner_id' => ['required', 'exists:users,id'],
+        'title' => ['required', 'max:255'],
     ]);
 
-    Product::query()
-        ->create(request()->only('title'));
+    Product::query()->create([
+        'owner_id' => $request->input('owner_id'),
+        'title'    => $request->input('title'),
+    ]);
 
     return response()->json('', 201);
 })->name('product.store');
