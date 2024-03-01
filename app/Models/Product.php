@@ -14,7 +14,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['owner_id', 'title'];
+    protected $fillable = ['owner_id', 'title', 'code'];
     protected $casts = ['code' => 'hashed'];
 
     public function owner(): BelongsTo
