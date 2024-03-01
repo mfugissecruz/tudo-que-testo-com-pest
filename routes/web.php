@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => view('welcome'));
@@ -17,7 +18,12 @@ Route::get('products', function () {
         ]);
 });
 
-Route::post('product/store/', function () {
+Route::post('product/store/', function (Request $request) {
+
+    $request->validate([
+        'title' => ['required', 'max:255']
+    ]);
+
     Product::query()
         ->create(request()->only('title'));
 
