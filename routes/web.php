@@ -47,5 +47,5 @@ Route::delete('product/update/{product}', function (Product $product) {
 })->name('product.destroy');
 
 Route::post('sending-email/{user}', function (User $user) {
-    Mail::to($user)->send(new WelcomeEmail);
+    Mail::to($user)->send(new WelcomeEmail($user));
 })->name('sending-email');

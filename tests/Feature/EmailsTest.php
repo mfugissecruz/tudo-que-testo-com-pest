@@ -32,3 +32,14 @@ test('email subject contain the user name', function () {
     expect($mail)
         ->assertHasSubject("Thank you {$user->name}");
 });
+
+test('email content should contain email with a text', function () {
+    Mail::fake();
+
+    $user = User::factory()->create();
+
+    $mail = new WelcomeEmail($user);
+
+    expect($mail)
+        ->assertSeeInHtml('Welcome to jungle!!');
+});
