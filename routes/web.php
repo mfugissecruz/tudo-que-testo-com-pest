@@ -1,5 +1,6 @@
 <?php
 
+use App\Jobs\ImportProductJob;
 use App\Mail\WelcomeEmail;
 use App\Models\Product;
 use App\Models\User;
@@ -46,6 +47,12 @@ Route::delete('product/update/{product}', function (Product $product) {
     $product->delete();
 })->name('product.destroy');
 
+Route::post('import-procucts', function (Request $request) {
+    $data = $request->get('data');
+    ImportProductJob::dispatch($data);
+})->name('product.import');
+
 Route::post('sending-email/{user}', function (User $user) {
     Mail::to($user)->send(new WelcomeEmail($user));
 })->name('sending-email');
+
