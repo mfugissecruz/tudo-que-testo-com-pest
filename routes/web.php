@@ -44,7 +44,7 @@ Route::post('product/update/{product}', function (Product $product) {
     $product->update(request()->only('title'));
 })->name('product.update');
 
-Route::delete('product/update/{product}', function (Product $product) {
+Route::delete('product/delete/{product}', function (Product $product) {
     $product->delete();
 })->name('product.destroy');
 
