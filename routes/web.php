@@ -5,6 +5,7 @@ use App\Mail\WelcomeEmail;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -49,7 +50,7 @@ Route::delete('product/update/{product}', function (Product $product) {
 
 Route::post('import-procucts', function (Request $request) {
     $data = $request->get('data');
-    ImportProductJob::dispatch($data);
+    ImportProductJob::dispatch($data, Auth::guard('web')->user()->id);
 })->name('product.import');
 
 Route::post('sending-email/{user}', function (User $user) {
