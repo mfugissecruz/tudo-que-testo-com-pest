@@ -1,15 +1,14 @@
 <?php
 
+use App\Actions\CreateProductAction;
 use App\Jobs\ImportProductJob;
 use App\Mail\WelcomeEmail;
 use App\Models\Product;
 use App\Models\User;
-use App\Notifications\NewProductNotifcation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
 
 Route::get('/', fn() => view('welcome'));
 Route::get('/404', fn () => ['oi']);
@@ -31,17 +30,8 @@ Route::post('product/store/', function (Request $request) {
         'title' => ['required', 'max:255']
     ]);
 
-    $title = $request->input('title');
-
-    Product::query()->create([
-        'owner_id' => Auth::guard('web')->user()->id,
-        'title'    => $title,
-        'code' => Str::slug($title),
-    ]);
-
-    Auth::guard('web')
-        ->user()
-        ->notify(new NewProductNotifcation());
+    app(CreateProductAction::class)
+        ->handle($request->input('title'), Auth::guard('web')->user());
 
     return response()->json('', 201);
 })->name('product.store');
